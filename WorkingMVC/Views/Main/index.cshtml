@@ -1,0 +1,50 @@
+﻿@model List<WorkingMVC.Data.Entitys.CategoryEntity>
+
+@{
+	Layout = "MainLayout";
+	ViewData["Title"] = "Main";
+}
+<h1>Магазин АТБ</h1>
+<div class="container">
+	<h2>Категорії</h2>
+	<form asp-controller="Main" asp-action="AddCategory" method="post">
+		<div class="form-group">
+			<label for="Name">Назва категорії</label>
+			<input type="text" name="Name" class="form-control" required />
+		</div>
+		<div class="form-group">
+			<label for="Image">URL зображення</label>
+			<input type="text" name="Image" class="form-control" required />
+		</div>
+		<button type="submit" class="btn btn-primary">Додати категорію</button>
+	</form>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Фото</th>
+				<th scope="col">Назва</th>
+				<th scope="col">Дії</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var category in Model)
+			{
+				<tr>
+					<th scope="row">@category.Id</th>
+					<td>
+						<img src="@category.Image" width="100" />
+					</td>
+					<td>@category.Name</td>
+					<td>
+						<form asp-controller="Main" asp-action="DeleteCategory" method="post" style="display:inline;">
+							<input type="hidden" name="id" value="@category.Id" />
+							<button type="submit" class="btn btn-danger">Видалити</button>
+						</form>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
