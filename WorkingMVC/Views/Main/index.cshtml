@@ -1,4 +1,4 @@
-﻿@model List<WorkingMVC.Data.Entitys.CategoryEntity>
+﻿@model List<CategoryItemModel>
 
 @{
 	Layout = "MainLayout";
@@ -7,6 +7,7 @@
 <h1>Магазин АТБ</h1>
 <div class="container">
 	<h2>Категорії</h2>
+	<a asp-action="Create" class="btn btn-success">Перейти на сторінку додавання категорії</a>
 	<form asp-controller="Main" asp-action="AddCategory" method="post">
 		<div class="form-group">
 			<label for="Name">Назва категорії</label>
@@ -38,10 +39,33 @@
 					</td>
 					<td>@category.Name</td>
 					<td>
-						<form asp-controller="Main" asp-action="DeleteCategory" method="post" style="display:inline;">
-							<input type="hidden" name="id" value="@category.Id" />
-							<button type="submit" class="btn btn-danger">Видалити</button>
-						</form>
+						<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal-@category.Id">
+							Видалити
+						</button>
+						<a asp-action="Edit" asp-route-id="@category.Id" class="btn btn-warning">
+							Редагувати
+						</a>
+
+						<div class="modal fade" id="confirmDeleteModal-@category.Id" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title">Підтвердження видалення</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрити"></button>
+									</div>
+									<div class="modal-body">
+										Ви впевнені, що хочете видалити категорію "@category.Name"?
+									</div>
+									<div class="modal-footer">
+										<form asp-controller="Main" asp-action="DeleteCategory" method="post">
+											<input type="hidden" name="id" value="@category.Id" />
+											<button type="submit" class="btn btn-danger">Видалити</button>
+										</form>
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</td>
 				</tr>
 			}
