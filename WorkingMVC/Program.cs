@@ -3,6 +3,7 @@ using Microsoft.Extensions.FileProviders;
 using WorkingMVC.Data;
 using WorkingMVC.Data.Entitys;
 using WorkingMVC.Interfaces;
+using WorkingMVC.Repositories;
 using WorkingMVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,11 +16,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IImageService, ImageService>();
-
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddSingleton<IHiddenCategoryService, HiddenCategoryService>();
-//builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
-//builder.Services.AddScoped<ICategoryService, CategoryService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

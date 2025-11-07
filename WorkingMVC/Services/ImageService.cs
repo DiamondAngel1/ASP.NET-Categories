@@ -37,5 +37,14 @@ namespace WorkingMVC.Services
                 return String.Empty;
             }
         }
+        public async Task DeleteImageAsync(string imagePath)
+        {
+            var oldFile = Path.Combine(Directory.GetCurrentDirectory(), configuration["DirPath"]!, Path.GetFileName(imagePath));
+            if (System.IO.File.Exists(oldFile))
+            {
+                System.IO.File.Delete(oldFile);
+            }
+            await Task.CompletedTask;
+        }
     }
 }
