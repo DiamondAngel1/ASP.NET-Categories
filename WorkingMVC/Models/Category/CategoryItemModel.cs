@@ -9,6 +9,6 @@ namespace WorkingMVC.Models.Category
         [Display(Name = "Назва")]
         public string Name { get; set; } = string.Empty;
         [Display(Name = "Фото")]
-        public string Image { get; set; }
+        public string ?Image { get; set; }
     }
 }

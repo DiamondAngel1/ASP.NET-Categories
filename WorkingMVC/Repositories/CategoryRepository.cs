@@ -22,7 +22,7 @@ namespace WorkingMVC.Repositories
         public async Task<CategoryEntity?> FindByIdAsync(int id)
         {
             var category = await _dbSet .SingleOrDefaultAsync( 
-                _dbContext=>_dbContext.Id == id) as CategoryEntity;
+                _dbContext=>_dbContext.Id == id);
             return category;
         }
     }

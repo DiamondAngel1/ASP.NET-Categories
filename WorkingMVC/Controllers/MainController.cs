@@ -9,12 +9,7 @@ using WorkingMVC.Models.Category;
 namespace WorkingMVC.Controllers
 {
     public class MainController(
-        MyAppDbContext myAppDbContext,
-        IConfiguration configuration,
-        IMapper mapper,
-        ICategoryService categoryService,
-        IImageService imageService,
-        IHiddenCategoryService hiddenService) : Controller
+        ICategoryService categoryService) : Controller
     {
         public async Task<IActionResult> Index()
         {
@@ -52,7 +47,7 @@ namespace WorkingMVC.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", "Сталася помилка при створенні категорії");
+                ModelState.AddModelError("", ex.Message);
                 return View(model);
             }
             //var name = model.Name.Trim().ToLower();
@@ -122,7 +117,7 @@ namespace WorkingMVC.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", "Сталася помилка при оновленні категорії");
+                ModelState.AddModelError("", ex.Message);
                 return View(model);
             }
                 ////якщо категорія прихована, повертаємо 404
@@ -173,7 +168,7 @@ namespace WorkingMVC.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Сталася помилка при видаленні категорії");
+                return StatusCode(500, ex.Message);
             }
                 ////Додаємо id категорії до списку прихованих
                 //hiddenService.Hide(id);

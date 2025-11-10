@@ -61,7 +61,6 @@ namespace WorkingMVC.Services
                 throw new Exception("Категорія Не знайдена");
             }
 
-            var normalizedName = model.Name.Trim().ToLower();
             var duplicate = await categoryRepository.FindByNameAsync(model.Name);
                 
             if (duplicate!=null && duplicate.Id != model.Id)

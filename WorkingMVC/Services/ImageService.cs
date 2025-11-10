@@ -32,7 +32,7 @@ namespace WorkingMVC.Services
                 await image.SaveAsync(filePath, new WebpEncoder());
                 return $"/{dirPath}/{fileName}" ;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return String.Empty;
             }

@@ -9,6 +9,7 @@ namespace WorkingMVC.Mappers
         public CategoryMapper()
         {
             CreateMap<CategoryEntity, CategoryItemModel>();
+
         }
     }
 }
