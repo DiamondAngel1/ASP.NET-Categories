@@ -1,0 +1,25 @@
+﻿@model UserProfileViewModel
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Профіль користувача</h2>
+    <div class="col-md-6" style="justify-self: center;">
+            <div class="text-center mb-4">
+                <img src="@Model.Image"
+                     class="rounded-circle shadow"
+                     style="width: 150px; height: 150px; object-fit: cover;"
+                     alt="@Model.FirstName" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Ім’я</label>
+                <input type="text" class="form-control" value="@Model.FirstName" readonly />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Прізвище</label>
+                <input type="text" class="form-control" value="@Model.LastName" readonly />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" value="@Model.Email" readonly />
+            </div>
+        </div>
+</div>
