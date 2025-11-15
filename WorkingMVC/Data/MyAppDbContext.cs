@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WorkingMVC.Data.Entitys;
 using WorkingMVC.Data.Entitys.Identity;
+using WorkingMVC.Models.Users;
 
 namespace WorkingMVC.Data
 {

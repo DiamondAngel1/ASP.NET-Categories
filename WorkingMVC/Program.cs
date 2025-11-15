@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using WorkingMVC.Constants;
 using WorkingMVC.Data;
 using WorkingMVC.Data.Entitys;
 using WorkingMVC.Data.Entitys.Identity;
@@ -22,6 +23,7 @@ builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IUserServices, UserService>();
 builder.Services.AddSingleton<IHiddenCategoryService, HiddenCategoryService>();
 builder.Services.AddIdentity<UserEntity, RoleEntity>(options =>
 {
@@ -88,10 +90,8 @@ using (var scoped = app.Services.CreateScope())
     //Створення ролей в БД, якщо їх ще немає
     if (!dbContext.Roles.Any())
     {
-        //масив з назвами ролей
-        string[] roles = { "Admin", "User" };
         //перебираємо назви ролей
-        foreach (var roleName in roles)
+        foreach (var roleName in Roles.AllRoles)
         {
             //Створюємо об'єкт ролі
             var role = new RoleEntity { Name = roleName };

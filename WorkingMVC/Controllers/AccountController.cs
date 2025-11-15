@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using WorkingMVC.Constants;
 using WorkingMVC.Data.Entitys.Identity;
 using WorkingMVC.Interfaces;
 using WorkingMVC.Models.Account;
+using WorkingMVC.Models.Users;
 using WorkingMVC.Services;
 
 namespace WorkingMVC.Controllers
@@ -67,6 +69,8 @@ namespace WorkingMVC.Controllers
             var result = await userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
+                //Додаємо користувача в роль User
+                result = await userManager.AddToRoleAsync(user, Roles.User);
                 await signInManager.SignInAsync(user,false);
                 //якщо все успішно, перенаправляємо на головну сторінку
                 return RedirectToAction("Index", "Main");
@@ -173,8 +177,5 @@ namespace WorkingMVC.Controllers
 
             return View(model);
         }
-
-
-
     }
 }
