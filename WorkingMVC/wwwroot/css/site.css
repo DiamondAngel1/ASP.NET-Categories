@@ -18,8 +18,8 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
-  padding-top: 4rem;
+    margin-bottom: 60px;
+    margin-top: 5rem !important;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {

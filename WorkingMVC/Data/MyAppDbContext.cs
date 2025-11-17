@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WorkingMVC.Data.Entitys;
 using WorkingMVC.Data.Entitys.Identity;
-using WorkingMVC.Models.Users;
+//using WorkingMVC.Models.Users;
 
 namespace WorkingMVC.Data
 {
@@ -17,6 +17,7 @@ namespace WorkingMVC.Data
 
         }
         public DbSet<CategoryEntity> Categories { get; set; }
+        public DbSet<ProductEntity> Products { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

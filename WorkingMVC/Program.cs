@@ -1,11 +1,16 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using WorkingMVC.Areas.Admin.Interfaces;
+using WorkingMVC.Areas.Admin.Repositories;
+using WorkingMVC.Areas.Admin.Services;
 using WorkingMVC.Constants;
 using WorkingMVC.Data;
 using WorkingMVC.Data.Entitys;
 using WorkingMVC.Data.Entitys.Identity;
 using WorkingMVC.Interfaces;
+using WorkingMVC.Mappers;
 using WorkingMVC.Repositories;
 using WorkingMVC.Services;
 
@@ -18,12 +23,17 @@ builder.Services.AddDbContext<MyAppDbContext>(options =>
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+builder.Services.AddAutoMapper(typeof(AdminCategoryProfile));
+builder.Services.AddAutoMapper(typeof(ProductProfile));
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<ICategoryRepositoryUser, CategoryRepositoryUser>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICategoryServiceUser, CategoryServiceUser>();
 builder.Services.AddScoped<IUserServices, UserService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddSingleton<IHiddenCategoryService, HiddenCategoryService>();
 builder.Services.AddIdentity<UserEntity, RoleEntity>(options =>
 {
@@ -52,6 +62,15 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+app.MapAreaControllerRoute(
+    name: "MyAdminArea",
+    areaName: "Admin",
+    pattern: "admin/{controller=Dashboards}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "Products",
+    pattern: "{controller=Main}/{action=Products}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

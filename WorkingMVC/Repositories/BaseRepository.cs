@@ -4,7 +4,7 @@ using WorkingMVC.Interfaces;
 
 namespace WorkingMVC.Repositories
 {
-    public abstract class BaseRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey>
+    public abstract class BaseRepository<TEntity, TKey> : IGenericRepositoryUser<TEntity, TKey>
      where TEntity : class, IEntity<TKey>
     {
         protected readonly DbContext _dbContext;

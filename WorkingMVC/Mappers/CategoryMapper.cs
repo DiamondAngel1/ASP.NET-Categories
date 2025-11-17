@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using WorkingMVC.Data.Entitys;
-using WorkingMVC.Models.Category;
+using WorkingMVC.Models.CategoryUser;
 
 namespace WorkingMVC.Mappers
 {
@@ -8,7 +8,7 @@ namespace WorkingMVC.Mappers
     {
         public CategoryMapper()
         {
-            CreateMap<CategoryEntity, CategoryItemModel>();
+            CreateMap<CategoryEntity, CategoryItemModelUser>();
 
         }
     }

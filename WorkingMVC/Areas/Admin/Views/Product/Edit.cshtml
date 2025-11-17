@@ -1,0 +1,53 @@
+﻿@model ProductEditModel
+@{
+    ViewData["Title"] = "Редагування товару";
+}
+
+<h1>Редагувати товар</h1>
+
+<form asp-action="Edit" enctype="multipart/form-data" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Назва</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label">Ціна</label>
+        <input asp-for="Price" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Опис</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CategoryId" class="form-label">Категорія</label>
+        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select"></select>
+    </div>
+
+    <div class="mb-3">
+        <label>Існуючі фото</label><br />
+        @for (int i = 0; i < Model.ExistingImages.Count; i++)
+        {
+            var img = Model.ExistingImages[i];
+            <div class="d-inline-block text-center me-2 mb-2">
+                <img src="@img" width="100" class="img-thumbnail" />
+                <div>
+                    <input type="checkbox" name="ImagesToDelete" value="@img" />
+                    <label>Видалити</label>
+                </div>
+                <input type="hidden" name="ExistingImages" value="@img" />
+            </div>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NewImages">Додати нові фото</label>
+        <input asp-for="NewImages" type="file" multiple class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Зберегти</button>
+</form>

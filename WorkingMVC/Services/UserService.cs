@@ -2,10 +2,10 @@
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using WorkingMVC.Areas.Admin.Models.Users;
 using WorkingMVC.Data;
 using WorkingMVC.Data.Entitys.Identity;
 using WorkingMVC.Interfaces;
-using WorkingMVC.Models.Users;
 
 namespace WorkingMVC.Services
 {
