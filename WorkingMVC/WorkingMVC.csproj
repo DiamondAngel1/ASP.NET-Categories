@@ -25,7 +25,6 @@
 
 	<ItemGroup>
 		<Folder Include="Areas\Admin\Mappers\" />
-		<Folder Include="images\" />
 	</ItemGroup>
 
 </Project>

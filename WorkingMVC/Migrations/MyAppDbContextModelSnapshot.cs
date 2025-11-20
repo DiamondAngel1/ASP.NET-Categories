@@ -110,6 +110,24 @@ namespace WorkingMVC.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("WorkingMVC.Data.Entitys.CartEntity", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("UserId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("tblCarts");
+                });
+
             modelBuilder.Entity("WorkingMVC.Data.Entitys.CategoryEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -259,6 +277,94 @@ namespace WorkingMVC.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
+            modelBuilder.Entity("WorkingMVC.Data.Entitys.OrderEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("OrderStatusId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderStatusId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("tblOrder");
+                });
+
+            modelBuilder.Entity("WorkingMVC.Data.Entitys.OrderItemEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Count")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("PriceBuy")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("tblOrderItems");
+                });
+
+            modelBuilder.Entity("WorkingMVC.Data.Entitys.OrderStatusEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tblOrderStatuses");
+                });
+
             modelBuilder.Entity("WorkingMVC.Data.Entitys.ProductEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -275,11 +381,6 @@ namespace WorkingMVC.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
-
-                    b.Property<string>("ImagesJson")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
@@ -287,17 +388,49 @@ namespace WorkingMVC.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(10,2)");
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
                     b.ToTable("tbl_products");
+                });
+
+            modelBuilder.Entity("WorkingMVC.Data.Entitys.ProductImageEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.Property<short>("Priority")
+                        .HasColumnType("smallint");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("tblProductImages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -336,6 +469,25 @@ namespace WorkingMVC.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WorkingMVC.Data.Entitys.CartEntity", b =>
+                {
+                    b.HasOne("WorkingMVC.Data.Entitys.ProductEntity", "Product")
+                        .WithMany("Carts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorkingMVC.Data.Entitys.Identity.UserEntity", "User")
+                        .WithMany("Carts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("WorkingMVC.Data.Entitys.Identity.UserRoleEntity", b =>
                 {
                     b.HasOne("WorkingMVC.Data.Entitys.Identity.RoleEntity", "Role")
@@ -355,15 +507,69 @@ namespace WorkingMVC.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("WorkingMVC.Data.Entitys.OrderEntity", b =>
+                {
+                    b.HasOne("WorkingMVC.Data.Entitys.OrderStatusEntity", "OrderStatus")
+                        .WithMany()
+                        .HasForeignKey("OrderStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorkingMVC.Data.Entitys.Identity.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrderStatus");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WorkingMVC.Data.Entitys.OrderItemEntity", b =>
+                {
+                    b.HasOne("WorkingMVC.Data.Entitys.OrderEntity", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorkingMVC.Data.Entitys.ProductEntity", "Product")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("WorkingMVC.Data.Entitys.ProductEntity", b =>
                 {
                     b.HasOne("WorkingMVC.Data.Entitys.CategoryEntity", "Category")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("WorkingMVC.Data.Entitys.ProductImageEntity", b =>
+                {
+                    b.HasOne("WorkingMVC.Data.Entitys.ProductEntity", "Product")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("WorkingMVC.Data.Entitys.CategoryEntity", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("WorkingMVC.Data.Entitys.Identity.RoleEntity", b =>
@@ -373,7 +579,23 @@ namespace WorkingMVC.Migrations
 
             modelBuilder.Entity("WorkingMVC.Data.Entitys.Identity.UserEntity", b =>
                 {
+                    b.Navigation("Carts");
+
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("WorkingMVC.Data.Entitys.OrderEntity", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("WorkingMVC.Data.Entitys.ProductEntity", b =>
+                {
+                    b.Navigation("Carts");
+
+                    b.Navigation("OrderItems");
+
+                    b.Navigation("ProductImages");
                 });
 #pragma warning restore 612, 618
         }

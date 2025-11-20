@@ -11,5 +11,6 @@ namespace WorkingMVC.Data.Entitys.Identity
         public string? Image { get; set; } = null;
         //навігаційна властивість для зв'язку з ролями користувача
         public ICollection<UserRoleEntity> UserRoles { get; set; } = null!;
+        public ICollection<CartEntity> Carts { get; set; } = null!;
     }
 }
